@@ -23,12 +23,12 @@ class _MyAppState extends BasePageState<MyApp, AppBloc> {
   final _appRouter = GetIt.instance.get<AppRouter>();
 
   @override
-  bool get isAppWidget => true;
+  bool get isAppWidget => true; // vì nó  chứa MateriaApp.router, không cần Provider<AppNavigation> lồng hay loading overlay
 
   @override
   void initState() {
     super.initState();
-    bloc.add(const AppInitiated());
+    bloc.add(const AppInitiated()); // bắn event khởi tạo
   }
 
   @override

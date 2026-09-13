@@ -14,7 +14,7 @@ sealed class LoadMoreOutput<T> extends BaseOutput with _$LoadMoreOutput<T> {
     @Default(null) Object? otherData,
     @Default(PagingConstants.initialPage) int page,
     @Default(false) bool isRefreshSuccess,
-    @Default(0) int offset,
+    @Default(0) int offset, // bỏ qua x bản ghi đầu tiên
     @Default(false) bool isLastPage,
   }) = _LoadMoreOutput;
 

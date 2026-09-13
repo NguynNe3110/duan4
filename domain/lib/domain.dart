@@ -1,7 +1,5 @@
 library domain;
 
-export 'domain.dart';
-
 export 'src/config/domain_config.dart';
 export 'src/di/di.config.dart';
 export 'src/di/di.dart';
@@ -66,6 +64,7 @@ export 'src/usecase/fashion_usecase/cart_item/update_cart_item_quantity_use_case
 export 'src/usecase/fashion_usecase/category/get_categories_use_case.dart';
 export 'src/usecase/fashion_usecase/category/get_category_by_id_use_case.dart';
 export 'src/usecase/fashion_usecase/favorite/get_favorites_use_case.dart';
+export 'src/usecase/fashion_usecase/favorite/toggle_favorite_use_case.dart';
 export 'src/usecase/fashion_usecase/order/create_order_use_case.dart';
 export 'src/usecase/fashion_usecase/order/get_order_by_id_use_case.dart';
 export 'src/usecase/fashion_usecase/order/get_orders_use_case.dart';
@@ -76,6 +75,7 @@ export 'src/usecase/fashion_usecase/product/get_products_by_category_usecase.dar
 export 'src/usecase/fashion_usecase/product/get_products_usecase.dart';
 export 'src/usecase/fashion_usecase/product_image/get_product_images_use_case.dart';
 export 'src/usecase/fashion_usecase/profile/get_profile_use_case.dart';
+export 'src/usecase/fashion_usecase/profile/get_me_use_case.dart';
 export 'src/usecase/fashion_usecase/profile/update_profile_use_case.dart';
 export 'src/usecase/fashion_usecase/review/create_review_use_case.dart';
 export 'src/usecase/fashion_usecase/review/delete_review_use_case.dart';

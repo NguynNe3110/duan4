@@ -5,5 +5,5 @@ abstract class Config {
 
   Future<void> config();
 
-  Future<void> init() => _asyncMemoizer.runOnce(config);
+  Future<void> init() => _asyncMemoizer.runOnce(config); //only run one time
 }

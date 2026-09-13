@@ -15,6 +15,7 @@ abstract class BaseBlocDelegate<E extends BaseBlocEvent, S extends BaseBlocState
     extends Bloc<E, S> {
   BaseBlocDelegate(super.initialState);
 
+  // khai báo để nhận (sẽ được inject từ pageState)
   late final AppNavigator navigator;
   late final AppBloc appBloc;
   late final ExceptionHandler exceptionHandler;
@@ -42,7 +43,7 @@ abstract class BaseBlocDelegate<E extends BaseBlocEvent, S extends BaseBlocState
       appExceptionWrapper: appExceptionWrapper,
     ));
 
-    return appExceptionWrapper.exceptionCompleter?.future;
+    return appExceptionWrapper.exceptionCompleter?.future; // đoạn này khá khó hiểu
   }
 
   void showLoading() {
@@ -89,7 +90,7 @@ abstract class BaseBlocDelegate<E extends BaseBlocEvent, S extends BaseBlocState
       await doOnError?.call(e);
 
       if (handleError || (forceHandleError?.call(e) ?? _forceHandleError(e))) {
-        await addException(AppExceptionWrapper(
+        await addException(AppExceptionWrapper( // có liên quan đến phần trên
           appException: e,
           doOnRetry: doOnRetry ??
               (handleRetry && maxRetries != 1
