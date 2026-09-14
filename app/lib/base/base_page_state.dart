@@ -12,22 +12,27 @@ abstract class BasePageState<T extends StatefulWidget, B extends BaseBloc>
 
 abstract class BasePageStateDelegate<T extends StatefulWidget, B extends BaseBloc> extends State<T>
     implements ExceptionHandlerListener {
-  late final AppNavigator navigator = GetIt.instance.get<AppNavigator>();
-  late final AppBloc appBloc = GetIt.instance.get<AppBloc>();
+
+  //body file
+
+  //  khởi tạo or dùng getIt sau đó bơm ngược lại Bloc
+  late final AppNavigator navigator = GetIt.instance.get<AppNavigator>(); // Imp
+  late final AppBloc appBloc = GetIt.instance.get<AppBloc>(); // Imp
   late final ExceptionMessageMapper exceptionMessageMapper = const ExceptionMessageMapper();
-  late final ExceptionHandler exceptionHandler = ExceptionHandler(
+  late final ExceptionHandler exceptionHandler = ExceptionHandler( // Imp
     navigator: navigator,
     listener: this,
   );
 
-  late final CommonBloc commonBloc = GetIt.instance.get<CommonBloc>()
+  // dùng cú pháp cascade(..);
+  late final CommonBloc commonBloc = GetIt.instance.get<CommonBloc>() // inject cho commonBloc
     ..navigator = navigator
     ..disposeBag = disposeBag
     ..appBloc = appBloc
     ..exceptionHandler = exceptionHandler
     ..exceptionMessageMapper = exceptionMessageMapper;
 
-  late final B bloc = GetIt.instance.get<B>()
+  late final B bloc = GetIt.instance.get<B>()  // inject cho bloc
     ..navigator = navigator
     ..disposeBag = disposeBag
     ..appBloc = appBloc
@@ -81,12 +86,14 @@ abstract class BasePageStateDelegate<T extends StatefulWidget, B extends BaseBlo
     );
   }
 
+  // hàm lắng nghe listeners
   Widget buildPageListeners({required Widget child}) => child;
 
   Widget buildPageLoading() => const Center(
         child: CircularProgressIndicator(),
       );
 
+  // hàm ui chính
   Widget buildPage(BuildContext context);
 
   @override
@@ -111,7 +118,7 @@ abstract class BasePageStateDelegate<T extends StatefulWidget, B extends BaseBlo
   }
 
   @override
-  void onRefreshTokenFailed() {
+  void onRefreshTokenFailed() { // hết token bắt buộc logout
     commonBloc.add(const ForceLogoutButtonPressed());
   }
 }

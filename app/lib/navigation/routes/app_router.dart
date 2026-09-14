@@ -17,7 +17,7 @@ class AppRouter extends RootStackRouter { // có thể hiểu là khai báo
   @override
   List<AutoRoute> get routes => [
         AutoRoute(page: LoginRoute.page),
-
+        AutoRoute(page: CheckoutRoute.page),
         AutoRoute(page: MainRoute.page, children: [ // nếu lồng thì lồng bằng children
           AutoRoute(
             page: HomeTab.page,

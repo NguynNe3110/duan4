@@ -3,15 +3,17 @@ import 'package:flutter/material.dart';
 
 import '../../app.dart';
 
-class RounedRectangleShimmer extends StatelessWidget {
-  const RounedRectangleShimmer({
+class RoundedRectangleShimmer extends StatelessWidget {
+  const RoundedRectangleShimmer({
     this.width,
     this.height,
+    this.borderRadius,
     super.key,
   });
 
   final double? width;
   final double? height;
+  final double? borderRadius;
 
   @override
   Widget build(BuildContext context) {
@@ -20,7 +22,7 @@ class RounedRectangleShimmer extends StatelessWidget {
       height: height ?? Dimens.d16.responsive(),
       decoration: BoxDecoration(
         color: Colors.black,
-        borderRadius: BorderRadius.circular(Dimens.d8.responsive()),
+        borderRadius: BorderRadius.circular(borderRadius ?? Dimens.d8.responsive()),
       ),
     );
   }

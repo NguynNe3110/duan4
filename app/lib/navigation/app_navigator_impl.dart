@@ -8,8 +8,8 @@ import 'package:shared/shared.dart';
 
 import '../app.dart';
 
-@LazySingleton(as: AppNavigator)
-class AppNavigatorImpl extends AppNavigator with LogMixin {
+@LazySingleton(as: AppNavigator) //dùng extend k phải implement
+class AppNavigatorImpl extends AppNavigator with LogMixin { // để định nghĩa giao thức của toàn bộ nav
   AppNavigatorImpl(
     this._appRouter,
     this._appPopupInfoMapper,
@@ -18,7 +18,8 @@ class AppNavigatorImpl extends AppNavigator with LogMixin {
 
   final tabRoutes = const [
     HomeTab(),
-    SearchTab(),
+    FavoriteTab(),
+    CartTab(),
     MyPageTab(),
   ];
 

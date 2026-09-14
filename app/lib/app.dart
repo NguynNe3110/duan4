@@ -64,6 +64,8 @@ export 'resource/theme/app_icon.dart';
 export 'resource/theme/app_images.dart';
 export 'resource/theme/app_radius.dart';
 export 'shared_view/app_text_field.dart';
+export 'ui/cart/cart_page.dart';
+export 'ui/favorite/favorite_page.dart';
 export 'ui/home/bloc/home.dart';
 export 'ui/home/bloc/home_bloc.dart';
 export 'ui/home/bloc/home_event.dart';
