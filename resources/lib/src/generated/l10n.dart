@@ -254,8 +254,13 @@ class S {
   }
 
   /// `Search`
-  String get search {
-    return Intl.message('Search', name: 'search', desc: '', args: []);
+  String get cart {
+    return Intl.message('Cart', name: 'cart', desc: '', args: []);
+  }
+
+  /// `Search`
+  String get favorite {
+    return Intl.message('Favorite', name: 'favorite', desc: '', args: []);
   }
 
   /// `My Page`

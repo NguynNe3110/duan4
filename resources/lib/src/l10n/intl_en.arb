@@ -24,8 +24,10 @@
   "retry": "Retry",
   "close": "Close",
   "search": "Search",
-  "myPage": "My Page",
+  "myPage": "Profile",
   "home": "Home",
+  "favorite": "Favorite",
+  "cart": "Cart",
   "darkTheme": "Dark Theme",
   "japanese": "Japanese"
 }
