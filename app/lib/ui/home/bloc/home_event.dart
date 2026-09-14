@@ -25,7 +25,16 @@ sealed class HomePageRefreshed extends HomeEvent with _$HomePageRefreshed {
 }
 
 @freezed
-sealed class UserLoadMore extends HomeEvent with _$UserLoadMore {
-  const UserLoadMore._();
-  const factory UserLoadMore() = _UserLoadMore;
+sealed class HomeLoadMoreProducts extends HomeEvent with _$HomeLoadMoreProducts {
+  const HomeLoadMoreProducts._();
+  const factory HomeLoadMoreProducts() = _HomeLoadMoreProducts;
+}
+
+@freezed
+sealed class HomeToggleFavorite extends HomeEvent with _$HomeToggleFavorite {
+  const HomeToggleFavorite._();
+  const factory HomeToggleFavorite({
+    required String productId,
+    required bool isFavorited,
+  }) = _HomeToggleFavorite;
 }
