@@ -1,20 +1,21 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+
 import '../../app.dart' hide EyeIconPressed, PasswordTextFieldChanged, EmailTextFieldChanged;
-import 'bloc/login.dart';
+import 'bloc/register.dart';
 
 @RoutePage()
-class LoginPage extends StatefulWidget {
-  const LoginPage({super.key});
+class RegisterPage extends StatefulWidget {
+  const RegisterPage({super.key});
 
   @override
   State<StatefulWidget> createState() {
-    return _LoginPageState();
+    return _RegisterPageState();
   }
 }
 
-class _LoginPageState extends BasePageState<LoginPage, LoginBloc> {
+class _RegisterPageState extends BasePageState<RegisterPage, RegisterBloc> {
   @override
   Widget buildPage(BuildContext context) {
     return CommonScaffold(
@@ -44,7 +45,7 @@ class _LoginPageState extends BasePageState<LoginPage, LoginBloc> {
                 SizedBox(height: Dimens.d20.responsive()),
                 // Eyebrow
                 Text(
-                  'chào mừng trở lại',
+                  'TẠO TÀI KHOẢN',
                   style: TextStyle(
                     fontSize: Dimens.d11.responsive(),
                     letterSpacing: 1.1,
@@ -63,15 +64,25 @@ class _LoginPageState extends BasePageState<LoginPage, LoginBloc> {
                       height: 1.2,
                     ),
                     children: const [
-                      TextSpan(text: 'Đăng nhập\n'),
+                      TextSpan(text: 'Bắt đầu với\n'),
                       TextSpan(
-                        text: 'tài khoản.',
+                        text: 'Nord.',
                         style: TextStyle(fontStyle: FontStyle.italic),
                       ),
                     ],
                   ),
                 ),
                 SizedBox(height: Dimens.d24.responsive()),
+                // Name field
+                _buildLabel('Họ và tên'),
+                SizedBox(height: Dimens.d6.responsive()),
+                TextField(
+                  onChanged: (name) =>
+                      bloc.add(NameTextFieldChanged(name: name)),
+                  keyboardType: TextInputType.name,
+                  decoration: _inputDecoration('An Nguyễn'),
+                ),
+                SizedBox(height: Dimens.d16.responsive()),
                 // Email field
                 _buildLabel('Email'),
                 SizedBox(height: Dimens.d6.responsive()),
@@ -85,21 +96,21 @@ class _LoginPageState extends BasePageState<LoginPage, LoginBloc> {
                 // Password field
                 _buildLabel('Mật khẩu'),
                 SizedBox(height: Dimens.d6.responsive()),
-                BlocBuilder<LoginBloc, LoginState>(
+                BlocBuilder<RegisterBloc, RegisterState>(
                   buildWhen: (prev, cur) =>
                       prev.obscureText != cur.obscureText,
                   builder: (context, state) {
                     return TextField(
                       onChanged: (pass) => bloc
                           .add(PasswordTextFieldChanged(password: pass)),
-                      obscureText: !state.obscureText,
+                      obscureText: state.obscureText,
                       keyboardType: TextInputType.visiblePassword,
                       decoration: _inputDecoration('••••••••').copyWith(
                         suffixIcon: GestureDetector(
                           onTap: () =>
                               bloc.add(const EyeIconPressed()),
                           child: Icon(
-                            state.obscureText
+                            !state.obscureText
                                 ? Icons.visibility
                                 : Icons.visibility_off,
                             size: Dimens.d20.responsive(),
@@ -110,52 +121,76 @@ class _LoginPageState extends BasePageState<LoginPage, LoginBloc> {
                     );
                   },
                 ),
-                SizedBox(height: Dimens.d12.responsive()),
-                // Remember me + Forgot password
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Row(
+                SizedBox(height: Dimens.d16.responsive()),
+                // Confirm Password field
+                _buildLabel('Nhập lại mật khẩu'),
+                SizedBox(height: Dimens.d6.responsive()),
+                BlocBuilder<RegisterBloc, RegisterState>(
+                  buildWhen: (prev, cur) =>
+                      prev.confirmObscureText != cur.confirmObscureText,
+                  builder: (context, state) {
+                    return TextField(
+                      onChanged: (pass) => bloc
+                          .add(ConfirmPasswordTextFieldChanged(confirmPassword: pass)),
+                      obscureText: state.confirmObscureText,
+                      keyboardType: TextInputType.visiblePassword,
+                      decoration: _inputDecoration('••••••••').copyWith(
+                        suffixIcon: GestureDetector(
+                          onTap: () =>
+                              bloc.add(const ConfirmEyeIconPressed()),
+                          child: Icon(
+                            !state.confirmObscureText
+                                ? Icons.visibility
+                                : Icons.visibility_off,
+                            size: Dimens.d20.responsive(),
+                            color: const Color(0xFFA5A199),
+                          ),
+                        ),
+                      ),
+                    );
+                  },
+                ),
+                SizedBox(height: Dimens.d16.responsive()),
+                // Terms and conditions
+                BlocBuilder<RegisterBloc, RegisterState>(
+                  buildWhen: (prev, cur) =>
+                      prev.isTermsAccepted != cur.isTermsAccepted,
+                  builder: (context, state) {
+                    return Row(
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         SizedBox(
                           width: Dimens.d18.responsive(),
                           height: Dimens.d18.responsive(),
                           child: Checkbox(
-                            value: true,
-                            onChanged: (_) {},
+                            value: state.isTermsAccepted,
+                            onChanged: (val) => bloc.add(
+                              TermsCheckboxToggled(
+                                  isAccepted: val ?? false),
+                            ),
                             activeColor: const Color(0xFF111110),
                             materialTapTargetSize:
                                 MaterialTapTargetSize.shrinkWrap,
                           ),
                         ),
                         SizedBox(width: Dimens.d8.responsive()),
-                        Text(
-                          'Ghi nhớ tôi',
-                          style: TextStyle(
-                            fontSize: Dimens.d12.responsive(),
-                            color: const Color(0xFF6B6862),
+                        Expanded(
+                          child: Text(
+                            'Tôi đồng ý với Điều khoản sử dụng và Chính sách bảo mật của Nord',
+                            style: TextStyle(
+                              fontSize: Dimens.d12.responsive(),
+                              color: const Color(0xFF6B6862),
+                              height: 1.3,
+                            ),
                           ),
                         ),
                       ],
-                    ),
-                    GestureDetector(
-                      onTap: () {
-                        // ponytail: navigate to forgot password when route exists
-                      },
-                      child: Text(
-                        'Quên mật khẩu?',
-                        style: TextStyle(
-                          fontSize: Dimens.d12.responsive(),
-                          color: const Color(0xFF111110),
-                          decoration: TextDecoration.underline,
-                        ),
-                      ),
-                    ),
-                  ],
+                    );
+                  },
                 ),
                 SizedBox(height: Dimens.d24.responsive()),
                 // Error text
-                BlocBuilder<LoginBloc, LoginState>(
+                BlocBuilder<RegisterBloc, RegisterState>(
                   buildWhen: (prev, cur) =>
                       prev.onPageError != cur.onPageError,
                   builder: (_, state) {
@@ -175,19 +210,19 @@ class _LoginPageState extends BasePageState<LoginPage, LoginBloc> {
                     );
                   },
                 ),
-                // Login button
-                BlocBuilder<LoginBloc, LoginState>(
+                // Register button
+                BlocBuilder<RegisterBloc, RegisterState>(
                   buildWhen: (prev, cur) =>
-                      prev.isLoginButtonEnabled !=
-                      cur.isLoginButtonEnabled,
+                      prev.isRegisterButtonEnabled !=
+                      cur.isRegisterButtonEnabled,
                   builder: (context, state) {
                     return SizedBox(
                       width: double.infinity,
                       height: Dimens.d48.responsive(),
                       child: ElevatedButton(
-                        onPressed: state.isLoginButtonEnabled
+                        onPressed: state.isRegisterButtonEnabled
                             ? () =>
-                                bloc.add(const LoginButtonPressed())
+                                bloc.add(const RegisterButtonPressed())
                             : null,
                         style: ElevatedButton.styleFrom(
                           backgroundColor: const Color(0xFF111110),
@@ -201,7 +236,7 @@ class _LoginPageState extends BasePageState<LoginPage, LoginBloc> {
                           elevation: 0,
                         ),
                         child: Text(
-                          'Đăng nhập',
+                          'Tạo tài khoản',
                           style: TextStyle(
                             fontSize: Dimens.d15.responsive(),
                             fontWeight: FontWeight.w500,
@@ -238,14 +273,12 @@ class _LoginPageState extends BasePageState<LoginPage, LoginBloc> {
                 _buildSocialButton(Icons.g_mobiledata, 'Tiếp tục với Google'),
                 SizedBox(height: Dimens.d12.responsive()),
                 _buildSocialButton(Icons.apple, 'Tiếp tục với Apple'),
-                SizedBox(height: Dimens.d12.responsive()),
-                _buildSocialButton(Icons.facebook, 'Tiếp tục với Facebook'),
                 SizedBox(height: Dimens.d24.responsive()),
-                // Sign up link
+                // Already have account -> Login link
                 Center(
                   child: Text.rich(
                     TextSpan(
-                      text: 'Chưa có tài khoản? ',
+                      text: 'Đã có tài khoản? ',
                       style: TextStyle(
                         fontSize: Dimens.d12.responsive(),
                         color: const Color(0xFF6B6862),
@@ -253,10 +286,9 @@ class _LoginPageState extends BasePageState<LoginPage, LoginBloc> {
                       children: [
                         WidgetSpan(
                           child: GestureDetector(
-                            onTap: () =>
-                                navigator.push(const AppRouteInfo.register()),
+                            onTap: () => navigator.pop(),
                             child: Text(
-                              'Đăng ký ngay',
+                              'Đăng nhập',
                               style: TextStyle(
                                 fontSize: Dimens.d12.responsive(),
                                 color: const Color(0xFF111110),
@@ -324,7 +356,7 @@ class _LoginPageState extends BasePageState<LoginPage, LoginBloc> {
       height: Dimens.d44.responsive(),
       child: OutlinedButton.icon(
         onPressed: () {
-          // ponytail: social login, add when backend supports
+          // ponytail: social registration, add when backend supports
         },
         icon: Icon(icon, size: Dimens.d18.responsive()),
         label: Text(
