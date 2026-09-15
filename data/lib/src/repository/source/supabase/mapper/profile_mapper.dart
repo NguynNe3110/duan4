@@ -16,11 +16,11 @@ class ProfileMapper extends BaseDataMapper<ProfileResponseDto, ProfileEntity> {
     );
   }
 
-  Map<String, dynamic> mapToDataMap(UpdateProfileRequestEntity data) {
-    return <String, dynamic>{
-      'full_name': data.fullName,
-      'phone_number': data.phoneNumber,
-      'avatar_url': data.avatarUrl,
-    };
+  UpdateProfileRequestDto mapToDto(UpdateProfileRequestEntity data) {
+    return UpdateProfileRequestDto(
+      fullName: data.fullName,
+      phoneNumber: data.phoneNumber,
+      avatarUrl: data.avatarUrl,
+    );
   }
 }

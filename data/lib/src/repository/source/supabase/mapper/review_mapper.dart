@@ -18,12 +18,12 @@ class ReviewMapper extends BaseDataMapper<ReviewResponseDto, ReviewEntity> {
     );
   }
 
-  Map<String, dynamic> mapToDataMap(CreateReviewRequestEntity data) {
-    return <String, dynamic>{
-      'product_id': data.productId,
-      'user_id': data.userId,
-      'rating': data.rating,
-      if (data.comment != null) 'comment': data.comment,
-    };
+  CreateReviewRequestDto mapToDto(CreateReviewRequestEntity data) {
+    return CreateReviewRequestDto(
+      productId: data.productId,
+      userId: data.userId,
+      rating: data.rating,
+      comment: data.comment,
+    );
   }
 }

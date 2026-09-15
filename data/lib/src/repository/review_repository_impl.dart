@@ -24,9 +24,9 @@ class ReviewRepositoryImpl extends ReviewRepository {
 
   @override
   Future<ReviewEntity> createReview({required CreateReviewRequestEntity data}) async {
-    final dataMap = _reviewMapper.mapToDataMap(data);
-    final dto = await _reviewSupabaseService.createReview(data: dataMap);
-    return _reviewMapper.mapToEntity(dto);
+    final dto = _reviewMapper.mapToDto(data);
+    final responseDto = await _reviewSupabaseService.createReview(data: dto.toJson());
+    return _reviewMapper.mapToEntity(responseDto);
   }
 
   @override

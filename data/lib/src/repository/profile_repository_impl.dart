@@ -21,12 +21,12 @@ class ProfileRepositoryImpl extends ProfileRepository {
     required String userId,
     required UpdateProfileRequestEntity data,
   }) async {
-    final dataMap = _profileMapper.mapToDataMap(data);
-    final dto = await _profileSupabaseService.updateProfile(
+    final dto = _profileMapper.mapToDto(data);
+    final responseDto = await _profileSupabaseService.updateProfile(
       userId: userId,
-      data: dataMap,
+      data: dto.toJson(),
     );
-    return _profileMapper.mapToEntity(dto);
+    return _profileMapper.mapToEntity(responseDto);
   }
 
   @override

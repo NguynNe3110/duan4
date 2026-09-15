@@ -7,28 +7,27 @@ import 'bloc/item_detail.dart';
 
 @RoutePage()
 class ItemDetailPage extends StatefulWidget {
-  const ItemDetailPage({
-    required this.user,
-    super.key,
-  });
+  const ItemDetailPage({super.key, required this.product});
 
-  final User user;
+  final ProductEntity product;
 
   @override
-  State<StatefulWidget> createState() {
-    return _ItemDetailPageState();
-  }
+  State<StatefulWidget> createState() => _ItemDetailPageState();
 }
 
 class _ItemDetailPageState extends BasePageState<ItemDetailPage, ItemDetailBloc> {
   @override
+  void initState() {
+    super.initState();
+    bloc.add(const ItemDetailPageInitiated());
+  }
+
+  @override
   Widget buildPage(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(title: Text(widget.product.name)),
       body: Center(
-        child: Text(
-          widget.user.toString(),
-          style: AppTextStyles.s14w400Primary(),
-        ),
+        child: Text('Chi tiết sản phẩm: ${widget.product.name} - Giá: ${widget.product.effectivePrice}'),
       ),
     );
   }
