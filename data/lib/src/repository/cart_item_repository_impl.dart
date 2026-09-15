@@ -32,4 +32,10 @@ class CartItemRepositoryImpl extends CartItemRepository {
   Future<void> deleteCartItem({required String id}) async {
     await _cartItemSupabaseService.deleteCartItem(id: id);
   }
+
+  @override
+  Future<void> addCartItem({required CartItemEntity cartItem}) async {
+    final dto = _cartItemMapper.mapToDto(cartItem);
+    await _cartItemSupabaseService.addCartItem(data: dto.toJson());
+  }
 }

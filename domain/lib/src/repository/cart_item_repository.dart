@@ -8,4 +8,5 @@ abstract class CartItemRepository {
   Future<CartItemEntity> updateCartItemQuantity({required String id, required int quantity});
 
   Future<void> deleteCartItem({required String id});
+  Future<void> addCartItem({required CartItemEntity cartItem});
 }

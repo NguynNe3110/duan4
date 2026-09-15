@@ -11,7 +11,7 @@ class CartItemEntity with _$CartItemEntity {
     required String userId,
     required String productId,
     required String variantId,
-    required int quantity,
+    @Default(1) int quantity,
     DateTime? createdAt,
     DateTime? updatedAt,
   }) = _CartItemEntity;
@@ -56,7 +56,7 @@ class CartSummaryEntity {
     for (final item in cartItems) {
       final product = productMap[item.productId];
       if (product != null) {
-        subtotal += product.effectivePrice * item.quantity;
+        subtotal += product.effectivePrice * (item.quantity ?? 1);
       }
     }
 

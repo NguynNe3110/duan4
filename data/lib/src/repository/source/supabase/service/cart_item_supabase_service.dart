@@ -66,4 +66,18 @@ class CartItemSupabaseService {
       },
     );
   }
+
+  Future<CartItemResponseDto> addCartItem({required Map<String, dynamic> data}) {
+    return runSupabaseCatching(
+      action: () async {
+        final response = await _supabaseClient
+            .from('cart_items')
+            .insert(data)
+            .select()
+            .single();
+        return CartItemResponseDto.fromJson(response as Map<String, dynamic>);
+      },
+    );
+  }
+
 }

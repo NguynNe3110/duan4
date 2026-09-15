@@ -16,4 +16,16 @@ class CartItemMapper extends BaseDataMapper<CartItemResponseDto, CartItemEntity>
       updatedAt: DateTime.tryParse(data?.updatedAt ?? ''),
     );
   }
+
+  CartItemResponseDto mapToDto(CartItemEntity entity) {
+    return CartItemResponseDto(
+      id: entity.id,
+      userId: entity.userId,
+      productId: entity.productId,
+      variantId: entity.variantId,
+      quantity: entity.quantity,
+      createdAt: entity.createdAt?.toIso8601String() ?? '',
+      updatedAt: entity.updatedAt?.toIso8601String() ?? '',
+    );
+  }
 }
