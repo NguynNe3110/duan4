@@ -23,6 +23,7 @@ class AppRouteInfoMapper extends BaseRouteInfoMapper {
       orderHistory: () => const OrderHistoryRoute(),
       search: () => const SearchRoute(),
       notification: () => const NotificationRoute(),
+
     );
   }
 }

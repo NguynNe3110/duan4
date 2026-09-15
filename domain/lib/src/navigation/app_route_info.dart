@@ -29,5 +29,5 @@ class AppRouteInfo with _$AppRouteInfo {
   const factory AppRouteInfo.orderHistory() = _OrderHistory;
   const factory AppRouteInfo.search() = _Search;
   
-  const factory AppRouteInfo.notification() = _Notification;
+  // const factory AppRouteInfo.notification() = _Notification;
 }

@@ -5,6 +5,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:injectable/injectable.dart';
 
 import 'package:app/app.dart';
+import 'package:shared/shared.dart';
 
 @Injectable()
 class MyPageBloc extends BaseBloc<MyPageEvent, MyPageState> {
@@ -19,26 +20,20 @@ class MyPageBloc extends BaseBloc<MyPageEvent, MyPageState> {
   final GetMeUseCase _getMeUseCase;
   final LogoutUseCase _logoutUseCase;
 
-  FutureOr<void> _onPageInitiated(
+  FutureOr<void> _onPageInitiated( // handel loading manual,
     MyPagePageInitiated event,
     Emitter<MyPageState> emit,
   ) async {
-    return runBlocCatching(
-      action: () async {
-        emit(state.copyWith(isShimmerLoading: true));
-        final output = await _getMeUseCase.execute(const GetMeUseCaseInput());
-        emit(state.copyWith(
-          profile: output.profile,
-          isShimmerLoading: false,
-        ));
-      },
-      handleError: (error) async {
-        emit(state.copyWith(
-          isShimmerLoading: false,
-          loadException: error,
-        ));
-      },
-    );
+    emit(state.copyWith(isShimmerLoading: true));
+    try {
+      final output = await _getMeUseCase.execute(const GetMeUseCaseInput());
+      emit(state.copyWith(profile: output.profile, isShimmerLoading: false));
+    } catch (e) {
+      emit(state.copyWith(
+        isShimmerLoading: false,
+        loadException: e is AppException ? e : AppUncaughtException(e),
+      ));
+    }
   }
 
   FutureOr<void> _onLogoutButtonPressed(

@@ -56,7 +56,7 @@ class SearchBloc extends BaseBloc<SearchEvent, SearchState> {
     SearchProductClicked event,
     Emitter<SearchState> emit,
   ) async {
-    final product = state.searchResults.firstWhere((p) => p.id == event.productId);
-    await navigator.push(AppRouteInfo.itemDetail(product));
+    // final product = state.searchResults.firstWhere((p) => p.id == event.productId);
+    // await navigator.push(AppRouteInfo.itemDetail(product));
   }
 }

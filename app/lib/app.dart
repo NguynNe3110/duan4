@@ -96,4 +96,5 @@ export 'ui/search/bloc/search_bloc.dart';
 export 'ui/search/bloc/search_event.dart';
 export 'ui/search/bloc/search_state.dart';
 export 'ui/search/search_page.dart';
+export 'ui/notification/notification_page.dart';
 export 'utils/app_utils.dart';
