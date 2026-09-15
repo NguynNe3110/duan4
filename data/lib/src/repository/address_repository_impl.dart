@@ -24,19 +24,19 @@ class AddressRepositoryImpl extends AddressRepository {
 
   @override
   Future<AddressEntity> createAddress({required AddressEntity address}) async {
-    final dataMap = _addressMapper.mapToDataMap(address);
-    final dto = await _addressSupabaseService.createAddress(data: dataMap);
-    return _addressMapper.mapToEntity(dto);
+    final dto = _addressMapper.mapToDto(address);
+    final responseDto = await _addressSupabaseService.createAddress(data: dto.toJson());
+    return _addressMapper.mapToEntity(responseDto);
   }
 
   @override
   Future<AddressEntity> updateAddress({required AddressEntity address}) async {
-    final dataMap = _addressMapper.mapToDataMap(address);
-    final dto = await _addressSupabaseService.updateAddress(
+    final dto = _addressMapper.mapToDto(address);
+    final responseDto = await _addressSupabaseService.updateAddress(
       id: address.id,
-      data: dataMap,
+      data: dto.toJson(),
     );
-    return _addressMapper.mapToEntity(dto);
+    return _addressMapper.mapToEntity(responseDto);
   }
 
   @override

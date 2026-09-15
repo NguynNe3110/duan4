@@ -14,12 +14,15 @@ class AppRouteInfoMapper extends BaseRouteInfoMapper {
       main: () => const MainRoute(),
       favorite: () => const FavoriteRoute(),
       cart: () => const CartRoute(),
-      itemDetail: (user) => ItemDetailRoute(user: user),
+      itemDetail: (product) => ItemDetailRoute(product: product),
       checkout: (selectedItems, products, summary) => CheckoutRoute(
         selectedItems: selectedItems,
         products: products,
         summary: summary,
       ),
+      orderHistory: () => const OrderHistoryRoute(),
+      search: () => const SearchRoute(),
+      notification: () => const NotificationRoute(),
     );
   }
 }

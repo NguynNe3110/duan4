@@ -23,18 +23,21 @@ class AddressMapper extends BaseDataMapper<AddressResponseDto, AddressEntity> {
     );
   }
 
-  Map<String, dynamic> mapToDataMap(AddressEntity entity) {
-    return {
-      'user_id': entity.userId,
-      'label': entity.label,
-      'receiver_name': entity.receiverName,
-      'phone_number': entity.phoneNumber,
-      'address_line': entity.addressLine,
-      'city': entity.city,
-      'district': entity.district,
-      'ward': entity.ward,
-      'postal_code': entity.postalCode,
-      'is_default': entity.isDefault,
-    };
+  AddressResponseDto mapToDto(AddressEntity entity) {
+    return AddressResponseDto(
+      id: entity.id,
+      userId: entity.userId,
+      label: entity.label,
+      receiverName: entity.receiverName,
+      phoneNumber: entity.phoneNumber,
+      addressLine: entity.addressLine,
+      city: entity.city,
+      district: entity.district,
+      ward: entity.ward,
+      postalCode: entity.postalCode,
+      isDefault: entity.isDefault ?? false,
+      createdAt: entity.createdAt?.toIso8601String() ?? '',
+      updatedAt: entity.updatedAt?.toIso8601String() ?? '',
+    );
   }
 }

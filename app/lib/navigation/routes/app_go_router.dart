@@ -38,7 +38,7 @@ class AppGoRouter extends BaseGoRouter {
                   GoRoute(
                     path: 'item-detail',
                     builder: (_, state) =>
-                        ItemDetailPage(user: state.extra! as User),
+                        ItemDetailPage(product: state.extra! as ProductEntity),
                   ),
                 ],
               ),

@@ -18,6 +18,11 @@ class AppRouter extends RootStackRouter { // có thể hiểu là khai báo
   List<AutoRoute> get routes => [
         AutoRoute(page: LoginRoute.page),
         AutoRoute(page: CheckoutRoute.page),
+
+        AutoRoute(page: OrderHistoryRoute.page),
+        AutoRoute(page: SearchRoute.page),
+        AutoRoute(page: NotificationRoute.page),
+
         AutoRoute(page: MainRoute.page, children: [ // nếu lồng thì lồng bằng children
           AutoRoute(
             page: HomeTab.page,

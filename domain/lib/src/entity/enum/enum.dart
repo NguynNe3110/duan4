@@ -48,9 +48,10 @@ enum NotificationType {
 }
 
 enum BottomTab {
-  home(icon: Icon(Icons.home), activeIcon: Icon(Icons.home)),
-  search(icon: Icon(Icons.search), activeIcon: Icon(Icons.search)),
-  myPage(icon: Icon(Icons.people), activeIcon: Icon(Icons.people));
+  home(icon: Icon(Icons.home_outlined), activeIcon: Icon(Icons.home_rounded)),
+  favorite(icon: Icon(Icons.favorite_outline_rounded), activeIcon: Icon(Icons.favorite_rounded)),
+  cart(icon: Icon(Icons.shopping_cart_outlined), activeIcon: Icon(Icons.shopping_cart)),
+  myPage(icon: Icon(Icons.person_outline_rounded), activeIcon: Icon(Icons.person_rounded));
 
   const BottomTab({
     required this.icon,
@@ -63,8 +64,10 @@ enum BottomTab {
     switch (this) {
       case BottomTab.home:
         return S.current.home;
-      case BottomTab.search:
-        return S.current.search;
+      case BottomTab.cart:
+        return S.current.cart;
+      case BottomTab.favorite:
+        return S.current.favorite;
       case BottomTab.myPage:
         return S.current.myPage;
     }

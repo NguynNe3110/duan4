@@ -18,11 +18,16 @@ class AppRouteInfo with _$AppRouteInfo {
   const factory AppRouteInfo.main() = _Main;
 
   // màn hình chi tiết thì phải truyền object
-  const factory AppRouteInfo.itemDetail(User user) = _UserDetail;
+  const factory AppRouteInfo.itemDetail(ProductEntity product) = _UserDetail;
 
   const factory AppRouteInfo.checkout({
     required List<CartItemEntity> selectedItems,
     required List<ProductEntity> products,
     required CartSummaryEntity summary,
   }) = _Checkout;
+  
+  const factory AppRouteInfo.orderHistory() = _OrderHistory;
+  const factory AppRouteInfo.search() = _Search;
+  
+  const factory AppRouteInfo.notification() = _Notification;
 }
