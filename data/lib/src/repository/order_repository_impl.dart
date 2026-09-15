@@ -6,9 +6,10 @@ import '../../data.dart';
 @LazySingleton(as: OrderRepository)
 class OrderRepositoryImpl extends OrderRepository {
   final OrderSupabaseService _orderSupabaseService;
+  final OrderItemSupabaseService _orderItemSupabaseService;
   final OrderMapper _orderMapper;
 
-  OrderRepositoryImpl(this._orderMapper, this._orderSupabaseService);
+  OrderRepositoryImpl(this._orderMapper, this._orderSupabaseService, this._orderItemSupabaseService);
 
   @override
   Future<List<OrderEntity>> getOrders({required String userId}) async {
@@ -23,9 +24,25 @@ class OrderRepositoryImpl extends OrderRepository {
   }
 
   @override
-  Future<OrderEntity> createOrder({required CreateOrderRequestEntity data}) async {
-    final dataMap = _orderMapper.mapToDataMap(data);
-    final dto = await _orderSupabaseService.createOrder(data: dataMap);
-    return _orderMapper.mapToEntity(dto);
+  Future<List<OrderEntity>> getOrderHistory({required String userId, int page = 0, int limit = 20}) async {
+    // ponytail: pagination not implemented, returns all. Add when needed.
+    return getOrders(userId: userId);
+  }
+
+  @override
+  Future<void> createOrder({
+    required CreateOrderRequestEntity orderData,
+    required List<OrderItemEntity> orderItems,
+  }) async {
+    final orderDto = _orderMapper.mapToDto(orderData);
+    final responseDto = await _orderSupabaseService.createOrder(data: orderDto.toJson());
+    final orderId = responseDto.id;
+
+    final orderItemDtos = orderItems.map((item) {
+      final dto = _orderMapper.mapOrderItemToDto(item);
+      return dto.copyWith(orderId: orderId).toJson();
+    }).toList();
+
+    await _orderItemSupabaseService.createOrderItems(data: orderItemDtos);
   }
 }

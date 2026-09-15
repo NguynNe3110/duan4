@@ -29,15 +29,28 @@ class OrderMapper extends BaseDataMapper<OrderResponseDto, OrderEntity> {
     );
   }
 
-  Map<String, dynamic> mapToDataMap(CreateOrderRequestEntity data) {
-    return <String, dynamic>{
-      'user_id': data.userId,
-      'total_price': data.totalPrice,
-      'address_line': data.addressLine,
-      if (data.paymentMethod != null) 'payment_method': data.paymentMethod,
-      if (data.status != null) 'status': data.status,
-      if (data.note != null) 'note': data.note,
-    };
+  CreateOrderRequestDto mapToDto(CreateOrderRequestEntity data) {
+    return CreateOrderRequestDto(
+      userId: data.userId,
+      totalPrice: data.totalPrice,
+      addressLine: data.addressLine,
+      paymentMethod: data.paymentMethod,
+      status: data.status,
+      note: data.note,
+    );
+  }
+
+  CreateOrderItemRequestDto mapOrderItemToDto(OrderItemEntity entity) {
+    return CreateOrderItemRequestDto(
+      orderId: entity.orderId,
+      productId: entity.productId,
+      variantId: entity.variantId,
+      productNameSnapshot: entity.productNameSnapshot,
+      variantSnapshot: entity.variantSnapshot,
+      priceSnapshot: entity.priceSnapshot.toDouble(),
+      quantity: entity.quantity,
+      imageUrlSnapshot: entity.imageUrlSnapshot,
+    );
   }
 
   OrderStatus _mapOrderStatus(OrderStatusResponseDto? dto) {

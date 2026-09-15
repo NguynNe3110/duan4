@@ -7,8 +7,9 @@ import '../../data.dart';
 class OrderItemRepositoryImpl extends OrderItemRepository {
   final OrderItemSupabaseService _orderItemSupabaseService;
   final OrderItemMapper _orderItemMapper;
+  final OrderMapper _orderMapper;
 
-  OrderItemRepositoryImpl(this._orderItemMapper, this._orderItemSupabaseService);
+  OrderItemRepositoryImpl(this._orderItemMapper, this._orderItemSupabaseService, this._orderMapper);
 
   @override
   Future<List<OrderItemEntity>> getOrderItems({required String orderId}) async {
@@ -23,8 +24,8 @@ class OrderItemRepositoryImpl extends OrderItemRepository {
   }
 
   @override
-  Future<List<OrderItemEntity>> createOrderItems({required List<Map<String, dynamic>> data}) async {
-    final dtos = await _orderItemSupabaseService.createOrderItems(data: data);
-    return _orderItemMapper.mapToListEntity(dtos);
+  Future<void> createOrderItems({required List<OrderItemEntity> data}) async {
+    final dtos = data.map((e) => _orderMapper.mapOrderItemToDto(e).toJson()).toList();
+    await _orderItemSupabaseService.createOrderItems(data: dtos);
   }
 }
